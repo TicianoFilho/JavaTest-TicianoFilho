@@ -1,6 +1,5 @@
 package br.com.cd2test.sigabem.dto;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import lombok.Builder;
@@ -18,7 +17,7 @@ public class EntregaDTO {
 	
 	private String nomeDestinatario;
 	
-	private BigDecimal vlTotalFrete;
+	private double vlTotalFrete;
 	
 	private LocalDate dataPrevistaEntrega;
 	

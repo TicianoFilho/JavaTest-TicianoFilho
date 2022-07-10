@@ -1,6 +1,5 @@
 package br.com.cd2test.sigabem.entity;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -42,7 +41,7 @@ public class Entrega {
 	private String nomeDestinatario;
 	
 	@Column(name = "vl_total_frete")
-	private BigDecimal vlTotalFrete;
+	private double vlTotalFrete;
 	
 	@Column(name = "data_prevista_entrega")
 	private LocalDate dataPrevistaEntrega;

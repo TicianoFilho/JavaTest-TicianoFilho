@@ -19,7 +19,7 @@ public class CepClient {
 	private String jsonAsStr;
 	private CepDto cepDto = null;
 	
-	public CepDto getJsonAsStrFromViaCep(String cep) {
+	public CepDto getFromJson(String cep) {
 		
 		URL url;		
 		try {

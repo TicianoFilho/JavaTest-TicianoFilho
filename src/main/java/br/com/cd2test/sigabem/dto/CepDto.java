@@ -13,9 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CepDto implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private String cep;
@@ -45,5 +42,4 @@ public class CepDto implements Serializable{
  * "gia": "1004",
  * "ddd": "11",
  * "siafi": "7107"
-
 */
