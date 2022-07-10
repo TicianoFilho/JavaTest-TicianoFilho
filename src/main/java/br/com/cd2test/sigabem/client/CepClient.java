@@ -17,9 +17,9 @@ public class CepClient {
 	private BufferedReader reader;
 	private StringBuffer responseContent = new StringBuffer();
 	private String jsonAsStr;
-	private CepDto cepDto = null;
+	private CepDto cepDto;
 	
-	public CepDto getFromJson(String cep) {
+	public CepDto getFromJSON(String cep) {
 		
 		URL url;		
 		try {

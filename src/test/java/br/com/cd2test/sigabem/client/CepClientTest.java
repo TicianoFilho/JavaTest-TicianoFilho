@@ -21,7 +21,7 @@ public class CepClientTest {
 		CepDto cepDto = null;
 		
 		//Ação
-		cepDto = cepClient.getFromJson(cep);
+		cepDto = cepClient.getFromJSON(cep);
 		
 		//Validação
 		//System.out.println(cepDto);

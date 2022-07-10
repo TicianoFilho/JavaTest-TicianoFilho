@@ -1,8 +1,9 @@
 package br.com.cd2test.sigabem.service;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.cd2test.sigabem.client.CepClient;
@@ -30,10 +31,9 @@ public class EntregaServiceImpl implements EntregaService {
 		Entrega entregaSalva = null;
 		try {
 			entregaSalva = entregaRepository.save(entrega);
-		} catch (Exception e) {
+		} catch (PersistException p) {
 			throw new PersistException(Mensagem.ERRO_AO_SALVAR);
-		}
-		
+		}		
 		return entregaSalva;
 	}
 
@@ -41,11 +41,13 @@ public class EntregaServiceImpl implements EntregaService {
 	public void delete(long entregaId) {
 		try {
 			entregaRepository.deleteById(entregaId);
-		} catch (Exception e) {
+		} catch (PersistException p) {
 			throw new PersistException(Mensagem.ERRO_AO_DELETAR);
 		}
 		
 	}
+	
+	
 	
 	//usado para verificar se os DDDs são iguais e se os UFs são iguais
 	private boolean saoIguais(String origem, String destino) throws RegraNegocioException {
@@ -56,8 +58,7 @@ public class EntregaServiceImpl implements EntregaService {
 		
 		if (origem.equals(destino)) {
 			return true;
-		}
-		
+		}	
 		return false;
 	}
 	
@@ -68,8 +69,8 @@ public class EntregaServiceImpl implements EntregaService {
 		int diasParaEntrega = 0;
 		entrega.setDataConsulta(LocalDate.now());
 		
-		CepDto objOrigem = new CepClient().getFromJson(entrega.getCepOrigem());
-		CepDto objDestino = new CepClient().getFromJson(entrega.getCepDestino());
+		CepDto objOrigem = new CepClient().getFromJSON(entrega.getCepOrigem());
+		CepDto objDestino = new CepClient().getFromJSON(entrega.getCepDestino());
 		
 		if (saoIguais(objOrigem.getDdd(), objDestino.getDdd())) { //Se os DDDs iguais = desconto de 50%			
 			valorFreteFinal = (valorFreteBruto * 0.5);
@@ -86,6 +87,36 @@ public class EntregaServiceImpl implements EntregaService {
 		entrega.setDataPrevistaEntrega(entrega.getDataConsulta().plusDays(diasParaEntrega));		
 		
 		return entrega;
+	}
+
+	@Override
+	public Entrega edit(Entrega entrega) {
+
+		Entrega entregaEditada = null;
+		try {
+			entregaEditada = entregaRepository.save(entrega);
+		} catch (PersistException p) {
+			throw new PersistException(Mensagem.ERRO_AO_EDITAR);
+		}		
+		return entregaEditada;
+	}
+
+	@Override
+	public List<Entrega> findAll() {
+		try {
+			return entregaRepository.findAll();		
+		} catch (PersistException p) {
+			throw new PersistException(Mensagem.ERRO_AO_LISTAR);
+		}
+	}
+
+	@Override
+	public Entrega findById(long entregaId) {
+		Optional<Entrega> entregaOptional = entregaRepository.findById(entregaId);
+		if (!entregaOptional.isPresent()) {
+			throw new PersistException(Mensagem.ERRO_AO_BUSCAR_REGISTRO);
+		}		
+		return entregaOptional.get();
 	}
 	
 
